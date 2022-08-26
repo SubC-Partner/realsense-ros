@@ -104,11 +104,11 @@ BaseRealSenseNode::BaseRealSenseNode(ros::NodeHandle& nodeHandle,
     _stream_name[RS2_STREAM_CONFIDENCE] = "confidence";
 
     // Infrared stream
-    _format[RS2_STREAM_INFRARED] = RS2_FORMAT_Y8;
+    _format[RS2_STREAM_INFRARED] = RS2_FORMAT_Y16;
 
-    _image_format[RS2_STREAM_INFRARED] = CV_8UC1;    // CVBridge type
-    _encoding[RS2_STREAM_INFRARED] = sensor_msgs::image_encodings::MONO8; // ROS message type
-    _unit_step_size[RS2_STREAM_INFRARED] = sizeof(uint8_t); // sensor_msgs::ImagePtr row step size
+    _image_format[RS2_STREAM_INFRARED] = CV_16UC1;    // CVBridge type
+    _encoding[RS2_STREAM_INFRARED] = sensor_msgs::image_encodings::MONO16; // ROS message type
+    _unit_step_size[RS2_STREAM_INFRARED] = sizeof(uint16_t); // sensor_msgs::ImagePtr row step size
     _stream_name[RS2_STREAM_INFRARED] = "infra";
 
     // Types for color stream
@@ -970,7 +970,7 @@ void BaseRealSenseNode::setupPublishers()
         {
             std::stringstream image_raw, camera_info, topic_metadata;
             bool rectified_image = false;
-            if (stream == DEPTH || stream == CONFIDENCE || stream == INFRA1 || stream == INFRA2)
+            if (stream == DEPTH || stream == CONFIDENCE)
                 rectified_image = true;
 
             std::string stream_name(STREAM_NAME(stream));
